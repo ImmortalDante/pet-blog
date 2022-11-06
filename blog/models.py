@@ -3,8 +3,8 @@ from django.urls import reverse
 
 
 class Category(models.Model):
-    slug = models.CharField(max_length=255, unique=True, db_index=True)
     title = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, unique=True, db_index=True)
 
     def __str__(self):
         return self.title
@@ -19,8 +19,8 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    slug = models.CharField(max_length=255, unique=True, db_index=True)
     title = models.CharField(max_length=120)
+    slug = models.CharField(max_length=255, unique=True, db_index=True)
     subtitle = models.CharField(max_length=255)
     body = models.TextField()
     image = models.ImageField(upload_to="photos/%Y/%m/%d/")
@@ -44,4 +44,3 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Posts"
         verbose_name_plural = "Posts"
-        ordering = ["id", "time_create"]

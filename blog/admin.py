@@ -12,9 +12,9 @@ class CategoryAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "time_created", "time_updated")
     search_fields = ("title", )
-    repopulated_fields = {"slug": ("title",)}
     list_filter = ("time_created", )
     readonly_fields = ("time_created", "time_updated")
+    prepopulated_fields = {"slug": ("title", )}
 
 
 admin.site.register(Category, CategoryAdmin)
