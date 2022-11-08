@@ -1,0 +1,8 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}{% endblock %}
+
+{% block content %}
+    {% get_categories category_slug as category %}
+    {{ category }}
+{% endblock %}

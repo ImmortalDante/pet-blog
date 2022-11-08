@@ -5,12 +5,13 @@ from django.urls import reverse
 class Category(models.Model):
     title = models.CharField(max_length=255)
     slug = models.CharField(max_length=255, unique=True, db_index=True)
+    image = models.ImageField(upload_to="categories/%Y/%m/%d/")
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("", kwargs={"slug": self.slug})
+        return reverse("category", kwargs={"category_slug": self.slug})
 
     class Meta:
         verbose_name = "Categories"
@@ -36,7 +37,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("", kwargs={
+        return reverse("post_by_category", kwargs={
             "category_slug": self._get_category_slug,
             "post_slug": self.slug,
         })
@@ -44,3 +45,4 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Posts"
         verbose_name_plural = "Posts"
+        ordering = ["time_created"]
