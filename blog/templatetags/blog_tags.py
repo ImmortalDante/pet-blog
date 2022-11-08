@@ -7,10 +7,11 @@ register = template.Library()
 
 
 @register.simple_tag()
-def get_posts(category_id=None):
-    if not category_id:
+def get_posts(category_slug=None):
+    if not category_slug:
         return Post.objects.all()[:2]
-    return Post.objects.filter(category_id=category_id).all()
+    category = get_categories(category_slug=category_slug)
+    return Post.objects.filter(category_id=category.pk).all()
 
 
 @register.simple_tag()
