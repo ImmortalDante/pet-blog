@@ -1,8 +1,20 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
-{% block title %}{% endblock %}
+{% block title %}{% get_categories category_slug as category %}{{ category }}{% endblock %}
 
-{% block content %}
+{% block content %}<br><br><br>
+    {% get_posts category_slug as posts %}
     {% get_categories category_slug as category %}
-    {{ category }}
+    {% for post in posts %}
+        <div class="card     shadow">
+          <div class="card-body">
+            <h5 class="card-title">{{ post }}</h5>
+            <p class="card-text text-muted">{{ post.subtitle }}</p><hr>
+              <p class="card-text text-muted">{{ post.body|truncatewords:60 }}</p>
+          </div>
+          <div class="card-footer text-muted">
+            <a href="#" class="btn btn-outline-dark" style="width: 79rem;">Read</a>
+          </div>
+        </div><br><br>
+    {% endfor %}
 {% endblock %}
