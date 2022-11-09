@@ -20,11 +20,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {% if not current_category %}
-              Themes
-              {% else %}
-              {{ current_category }}
-              {% endif %}
+              {% block theme %}{% endblock %}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               {% get_categories as categories %}

@@ -2,6 +2,8 @@
 {% load blog_tags %}
 {% block title %}Home{% endblock %}
 
+{% block theme %}Themes{% endblock %}
+
 {% block content %}<br><br><br>
     {% get_posts as posts %}
     <h3>What's new?</h3><hr><br>
@@ -15,7 +17,7 @@
               <p class="card-text">{{ post.body|truncatechars:100 }}</p>
           </div>
               <div class="card-footer">
-                <a href="#" class="btn btn-outline-dark" style="width: 28rem;">Read</a>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-outline-dark" style="width: 28rem;">Read</a>
               </div>
         </div>
         </div>

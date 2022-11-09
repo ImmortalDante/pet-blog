@@ -15,6 +15,11 @@ def get_posts(category_slug=None):
 
 
 @register.simple_tag()
+def get_post(post_slug):
+    return Post.objects.filter(slug=post_slug).first()
+
+
+@register.simple_tag()
 def get_categories(category_slug=None):
     if not category_slug:
         return Category.objects.all()

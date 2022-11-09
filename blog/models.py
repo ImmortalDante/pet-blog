@@ -29,16 +29,11 @@ class Post(models.Model):
     time_updated = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-    def _get_category_slug(self):
-        category = Category.objects.get(self.category)
-        return category.slug
-
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("post_by_category", kwargs={
-            "category_slug": self._get_category_slug,
+        return reverse("post", kwargs={
             "post_slug": self.slug,
         })
 

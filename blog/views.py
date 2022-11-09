@@ -13,6 +13,13 @@ def category(request, category_slug):
     return render(request, "blog/category.html", context)
 
 
+def post(request, post_slug):
+    context = {
+        "post_slug": post_slug,
+    }
+    return render(request, "blog/post.html", context)
+
+
 def search(request, search_request):
     context = {
         "search_request": search_request
