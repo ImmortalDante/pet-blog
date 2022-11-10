@@ -1,12 +1,10 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
-{% block title %}{% get_categories category_slug as category %}{{ category }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
-{% block theme %}{% get_categories category_slug as category %}{{ category }}{% endblock %}
+{% block theme %}{{ title }}{% endblock %}
 
 {% block content %}<br><br><br>
-    {% get_posts category_slug as posts %}
-    {% get_categories category_slug as category %}
     {% for post in posts %}
         <div class="card shadow">
           <div class="card-body">

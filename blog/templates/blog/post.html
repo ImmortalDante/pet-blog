@@ -1,12 +1,11 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
 
-{% block title %}{% get_post post_slug as post %}{{ post }}{% endblock %}
+{% block title %}{{ post }}{% endblock %}
 
-{% block theme %}{% get_post post_slug as post %}{{ post.category }}{% endblock %}
+{% block theme %}{{ post.category }}{% endblock %}
 
 {% block content %}
-    {% get_post post_slug as post %}
     <div style="text-align: center">
         <h2>{{ post }}</h2>
     </div>

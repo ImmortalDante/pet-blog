@@ -1,11 +1,9 @@
 {% extends "blog/base.html" %}
-{% load blog_tags %}
-{% block title %}Home{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block theme %}Themes{% endblock %}
 
 {% block content %}<br><br><br>
-    {% get_posts as posts %}
     <h3>What's new?</h3><hr><br>
       <div class="row">
           {% for post in posts %}
@@ -23,7 +21,6 @@
         </div>
           {% endfor %}
       </div><br><br><br>
-    {% get_categories as categories %}
     <h3>Popular categories</h3><hr><br>
     <div class="row">
         {% for category in categories %}
