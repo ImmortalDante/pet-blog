@@ -2,24 +2,24 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
 from .models import Post, Category
+from .utils import DataMixin
 
 
-class BlogHome(ListView):
+class BlogHome(DataMixin, ListView):
     model = Category
     template_name = "blog/home.html"
     context_object_name = "categories"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["posts"] = Post.objects.all()[:2]
-        context["title"] = "Home"
-        return context
+        user_context = self.get_user_context(title="Home", posts=Post.objects.all()[:2])
+        return dict(list(context.items()) + list(user_context.items()))
 
     def get_queryset(self):
-        return Category.objects.all()[:4]
+        return Category.objects.all()
 
 
-class CategoryToPostView(ListView):
+class CategoryToPostView(DataMixin, ListView):
     model = Post
     template_name = "blog/category.html"
     context_object_name = "posts"
@@ -27,20 +27,24 @@ class CategoryToPostView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()[:4]
-        category_obj = Category.objects.filter(slug=self.kwargs["category_slug"]).first()
-        context["title"] = category_obj.title
-        return context
+        category_obj = Category.objects.filter(slug=self.kwargs["category_slug"]).first().title
+        user_context = self.get_user_context(title=category_obj, categories=Category.objects.all())
+        return dict(list(context.items()) + list(user_context.items()))
 
     def get_queryset(self):
         return Post.objects.filter(category__slug=self.kwargs["category_slug"]).all()
 
 
-class PostView(DetailView):
+class PostView(DataMixin, DetailView):
     model = Post
     template_name = "blog/post.html"
     slug_url_kwarg = "post_slug"
     context_object_name = "post"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_context = self.get_user_context(categories=Category.objects.all())
+        return dict(list(context.items()) + list(user_context.items()))
 
 
 def search(request, search_request):
