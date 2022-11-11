@@ -17,4 +17,17 @@
           </div>
         </div><br><br>
     {% endfor %}
+    {% if page_obj.has_other_pages %}
+    <nav style="text-align: center">
+        <ul class="pagination pagination-lg">
+            {% for p in paginator.page_range %}
+                {% if page_obj.number == p %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
 {% endblock %}

@@ -20,6 +20,7 @@ class BlogHome(DataMixin, ListView):
 
 
 class CategoryToPostView(DataMixin, ListView):
+    paginate_by = 4
     model = Post
     template_name = "blog/category.html"
     context_object_name = "posts"
