@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
+from .forms import UserRegistrationForm
 
 from .models import Post, Category
 from .utils import DataMixin
@@ -46,6 +48,21 @@ class PostView(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user_context = self.get_user_context(categories=Category.objects.all())
         return dict(list(context.items()) + list(user_context.items()))
+
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = UserRegistrationForm
+    template_name = "blog/subscribe.html"
+    success_url = reverse_lazy("home")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_context = self.get_user_context(title="Subscribe")
+        return dict(list(context.items()) + list(user_context.items()))
+
+
+class LoginUser(DetailView):
+    pass
 
 
 def search(request, search_request):
