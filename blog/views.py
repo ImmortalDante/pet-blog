@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.contrib.auth import logout, login
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
-from .forms import UserRegistrationForm
+from django.contrib.auth.views import LoginView
 
 from .models import Post, Category
 from .utils import DataMixin
+from .forms import UserRegistrationForm, UserLoginForm
 
 
 class BlogHome(DataMixin, ListView):
@@ -60,9 +62,23 @@ class RegisterUser(DataMixin, CreateView):
         user_context = self.get_user_context(title="Subscribe")
         return dict(list(context.items()) + list(user_context.items()))
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect("home")
 
-class LoginUser(DetailView):
-    pass
+
+class LoginUser(DataMixin, LoginView):
+    form_class = UserLoginForm
+    template_name = "blog/login.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginUser, self).get_context_data(**kwargs)
+        user_context = self.get_user_context(title="Login")
+        return dict(list(context.items()) + list(user_context.items()))
+
+    def get_success_url(self):
+        return reverse_lazy("home")
 
 
 def search(request, search_request):
@@ -70,3 +86,8 @@ def search(request, search_request):
         "search_request": search_request
     }
     return render(request, "blog/search_result.html", context)
+
+
+def logout_user(request):
+    logout(request)
+    return redirect("home")

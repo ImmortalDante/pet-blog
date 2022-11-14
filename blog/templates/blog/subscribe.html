@@ -7,6 +7,6 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-outline-dark" type="submit">Subscribe</button>
+        <button class="btn btn-outline-dark" type="submit">Subscribe</button> | <a class="text-muted" href="{% url 'login' %}">Already subscribed?</a>
     </form><br><br>
 {% endblock %}

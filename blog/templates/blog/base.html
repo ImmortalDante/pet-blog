@@ -33,7 +33,11 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-dark" type="submit">Search</button>
       </form>
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn btn-outline-dark" style="margin-left: 1%;" type="submit">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
+    {% else %}
       <a href="{% url 'subscribe' %}" class="btn btn-outline-dark" style="margin-left: 1%;" type="submit">Subscribe <i class="fa-solid fa-user-plus"></i></a>
+    {% endif %}
     </div>
   </div>
 </nav>
