@@ -81,9 +81,12 @@ class LoginUser(DataMixin, LoginView):
         return reverse_lazy("home")
 
 
-def search(request, search_request):
+def search(request):
+    search_request = request.POST["search_request"]
+    posts = Post.objects.filter(body__contains=search_request).all()
     context = {
-        "search_request": search_request
+        "search_request": search_request,
+        "posts": posts,
     }
     return render(request, "blog/search_result.html", context)
 

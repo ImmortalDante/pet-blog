@@ -1,7 +1,28 @@
 {% extends "blog/base.html" %}
 {% load static %}
 
-{% block title %}{% endblock %}
+{% block title %}Search{% endblock %}
 
-{% block content %}
+{% block content %} <br><br><br>
+    {% if posts %}
+    <div class="alert alert-dark" role="alert">
+        <h4><i class="fa-solid fa-magnifying-glass"></i> You searched for "{{ search_request }}"</h4>
+    </div><br>
+     {% else %}
+        <div class="alert alert-danger" role="alert">
+            <h4><i class="fa-solid fa-face-sad-tear"></i> No results for "{{ search_request }}"</h4>
+        </div><br><br><br><br><br><br><br><br><br><br><br>
+    {% endif %}
+    {% for post in posts %}
+        <div class="card shadow">
+          <div class="card-body">
+            <h3 class="card-title">{{ post }}</h3>
+            <h6 class="card-text text-muted">{{ post.subtitle }}</h6><hr>
+              <p class="card-text text-muted">{{ post.body|truncatewords:60 }}</p>
+          </div>
+          <div class="card-footer text-muted">
+            <a href="{{ post.get_absolute_url }}" class="btn btn-outline-dark" style="width: 79rem;">Read</a>
+          </div>
+        </div><br><br>
+    {% endfor %}
 {% endblock %}
